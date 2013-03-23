@@ -5,7 +5,7 @@ public class NethonScript : MonoBehaviour {
 	
 	public Vector3 force;
 	
-	private const float SPEED = 40f;
+	private const float SPEED = 20f;
 	private const float FRICTION = .9f;
 	
 	void OnMouseEnter ()

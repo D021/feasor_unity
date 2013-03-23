@@ -7,17 +7,21 @@ public class Manipulator : MonoBehaviour {
 	private Transform pickObj;
 	private float dist;
 	private float closingDist;
-	private const float MIN_DIST = 1f;
+	private const float MIN_DIST = 3f;
+	private float angle;
 		
 	void CheckRayCastBor ()
 	{
 		RaycastHit hit = new RaycastHit ();
 		
-		if (Physics.Raycast (mouseRay, out hit, 100) && hit.transform.tag == "Nethon") {
+		if (Input.GetMouseButton (0)) {
+			
+			if (Physics.Raycast (mouseRay, out hit, 100) && hit.transform.tag == "Nethon") {
 									
-			if (Input.GetMouseButton (0)) {
 			
 				if (!pickObj) {
+					
+					angle = 0;
 										
 					//
 					// if it's a rigidbody, zero its physics velocity
@@ -33,7 +37,7 @@ public class Manipulator : MonoBehaviour {
 					// remember its distance from the camera
 					//
 					
-					dist = Vector3.Distance (pickObj.position, Camera.main.transform.position);
+					dist = Vector3.Distance (pickObj.position, transform.position);
 					
 				} else { 
 						
@@ -57,11 +61,12 @@ public class Manipulator : MonoBehaviour {
 						//
 						// Clear closing dist when we release sling shot key
 						//
+						
 						closingDist = 0;
 					}
 					
-					Vector3 newPos = mouseRay.GetPoint (dist);
-					pickObj.position = newPos;
+					Vector3 newPos = transform.forward.normalized;
+					pickObj.RotateAround (transform.position, angle);
 				}
 			} else { 
 					
